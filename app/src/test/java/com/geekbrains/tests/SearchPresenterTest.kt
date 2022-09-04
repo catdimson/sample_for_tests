@@ -28,9 +28,10 @@ class SearchPresenterTest {
     fun setUp() {
         //Обязательно для аннотаций "@Mock"
         //Раньше было @RunWith(MockitoJUnitRunner.class) в аннотации к самому классу (SearchPresenterTest)
-        MockitoAnnotations.initMocks(this)
+        MockitoAnnotations.openMocks(this)
         //Создаем Презентер, используя моки Репозитория и Вью, проинициализированные строкой выше
-        presenter = SearchPresenter(viewContract, repository)
+        presenter = SearchPresenter(repository)
+        presenter.onAttach(viewContract)
     }
 
     @Test //Проверим вызов метода searchGitHub() у нашего Репозитория
@@ -148,5 +149,20 @@ class SearchPresenterTest {
 
         //Убеждаемся, что ответ от сервера обрабатывается корректно
         verify(viewContract, times(1)).displaySearchResults(searchResults, 101)
+    }
+
+    @Test
+    fun searchPresenterTest_onAttach() {
+        presenter.searchGitHub("Random string")
+
+        verify(viewContract, times(1)).displayLoading(true)
+    }
+
+    @Test
+    fun searchPresenterTest_onDetach() {
+        presenter.onDetach()
+        presenter.searchGitHub("Random string")
+
+        verify(viewContract, times(0)).displayLoading(true)
     }
 }

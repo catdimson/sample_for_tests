@@ -2,7 +2,6 @@ package com.geekbrains.tests.presenter.details
 
 import android.os.Build
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.geekbrains.tests.repository.GitHubRepository
 import com.geekbrains.tests.view.details.ViewDetailsContract
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.times
